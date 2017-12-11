@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "math"
 
 func main() {
 	n5 := &TreeNode{5, nil, nil}
@@ -10,6 +11,7 @@ func main() {
 	// n1 := &TreeNode{1, nil, n2}
 	n0 := &TreeNode{0, n3, nil}
 	fmt.Println(isBalanced(n0))
+	fmt.Println(isBalanced2(n0))
 }
 
 type TreeNode struct {
@@ -19,38 +21,48 @@ type TreeNode struct {
 }
 
 func isBalanced(root *TreeNode) bool {
-	if root == nil {
+	if depth(root) == 0 {
 		return true
 	}
-	return getHighestHeight(root, 0) <= getLowestHeight(root, 0)+1
+
+	l := depth(root.Left)
+	r := depth(root.Right)
+
+	return math.Abs(float64(l-r)) <= 1 && isBalanced(root.Left) && isBalanced(root.Right)
 }
 
-func getLowestHeight(n *TreeNode, h int) int {
-	if n.Left == nil || n.Right == nil {
-		return h + 1
+func depth(node *TreeNode) int {
+	if node == nil {
+		return 0
+	}
+	l := depth(node.Left)
+	r := depth(node.Right)
+	if l > r {
+		return l + 1
 	}
 
-	lh := getLowestHeight(n.Left, h+1)
-	rh := getLowestHeight(n.Right, h+1)
-	if lh > rh {
-		return rh
-	}
-	return lh
+	return r + 1
 }
 
-func getHighestHeight(n *TreeNode, h int) int {
-	if n.Left == nil && n.Right == nil {
-		return h + 1
-	} else if n.Left == nil && n.Right != nil {
-		return getHighestHeight(n.Right, h+1)
-	} else if n.Right == nil && n.Left != nil {
-		return getHighestHeight(n.Left, h+1)
+var inbalanced = -100
+
+func isBalanced2(root *TreeNode) bool {
+	return tellBalance(root) != inbalanced
+}
+
+func tellBalance(node *TreeNode) int {
+	if node == nil {
+		return 0
 	}
 
-	lh := getHighestHeight(n.Left, h+1)
-	rh := getHighestHeight(n.Right, h+1)
-	if lh > rh {
-		return lh
+	l := tellBalance(node.Left)
+	r := tellBalance(node.Right)
+	if l == inbalanced || r == inbalanced || math.Abs(float64(l-r)) > 1 {
+		return inbalanced
 	}
-	return rh
+
+	if l > r {
+		return 1 + l
+	}
+	return 1 + r
 }
