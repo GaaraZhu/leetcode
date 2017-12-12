@@ -11,7 +11,7 @@ func main() {
 	fmt.Println(t.StartsWith("abc"))
 	fmt.Println(t.StartsWith("bc"))
 
-	//false, true
+	//false,true
 	t2 := Constructor1()
 	t2.Insert("ab")
 	fmt.Println(t2.Search("a"))
@@ -31,7 +31,7 @@ func main() {
 	fmt.Println(t4.StartsWith("a"))
 	fmt.Println(t4.StartsWith("ab"))
 
-	//true, false, true, true
+	//true,false,true,true
 	t5 := Constructor1()
 	t5.Insert("abc")
 	fmt.Println(t5.Search("abc"))
@@ -41,7 +41,7 @@ func main() {
 	t5.Insert("ab")
 	fmt.Println(t5.Search("ab"))
 
-	//false, true, false
+	//false,true,false
 	t6 := Constructor1()
 	t6.Insert("app")
 	t6.Insert("apple")
@@ -66,19 +66,17 @@ func Constructor1() Trie {
 
 /** Inserts a word into the trie. */
 func (this *Trie) Insert(word string) {
-	var leaves = this.leaves
-	maxIndex := len(word) - 1
-	for i := 0; i <= maxIndex; i++ {
-		t, ok := leaves[word[i]]
-		if !ok {
-			t = &Trie{map[byte]*Trie{}, false}
-			leaves[word[i]] = t
-		}
-		leaves = t.leaves
-		if i == maxIndex {
-			t.isEndOfWord = true
-		}
+	if word == "" {
+		this.isEndOfWord = true
+		return
 	}
+
+	t, ok := this.leaves[word[0]]
+	if !ok {
+		t = &Trie{map[byte]*Trie{}, false}
+		this.leaves[word[0]] = t
+	}
+	t.Insert(word[1:len(word)])
 }
 
 /** Returns if the word is in the trie. */
