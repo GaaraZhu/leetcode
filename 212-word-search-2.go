@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(findWords([][]byte{{'a', 'a'}}, []string{"aaa"}))                                                                                          //[]
 	fmt.Println(findWords([][]byte{{'a', 'b'}, {'c', 'd'}}, []string{"acdb"}))                                                                             //["acdb"]
 	fmt.Println(findWords([][]byte{{'a', 'b'}, {'c', 'd'}}, []string{"ab", "cb", "ad", "bd", "ac", "ca", "da", "bc", "db", "adcb", "dabc", "abb", "acb"})) //["ab","ac","bd","ca","db"]
-	fmt.Println(findWords([][]byte{{'a', 'b'}, {'c', 'd'}}, []string{"ab"}))                                                                               //["ab","ac","bd","ca","db"]
+	fmt.Println(findWords([][]byte{{'a', 'b'}, {'c', 'd'}}, []string{"ab"}))                                                                               //["ab"]
 }
 
 func findWords(board [][]byte, words []string) []string {
