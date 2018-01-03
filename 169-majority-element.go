@@ -5,16 +5,26 @@ import (
 )
 
 func main() {
-	fmt.Println(getSum(25, 8))
+	fmt.Println(majorityElement([]int{2,2,3,3,2,2,2,6}))
 }
 
-func getSum(a int, b int) int {
-    nc := a ^ b
-    c := a & b << 1
-    if (c ==0) {
-	return nc | c
-    }
+func majorityElement(nums []int) int {
+	cm := map[int]int{}
+	for _, n := range nums {
+		c, ok := cm[n]
+		if !ok {
+			cm[n] = 1
+		} else {
+			cm[n] = c + 1
+		}
+	}
     
-   return getSum(nc, c)
+	for k, v := range cm {
+		if v > len(nums) /2 {
+			return k
+		}
+	}
+
+	return -1
 }
 
