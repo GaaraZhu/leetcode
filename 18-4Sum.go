@@ -8,8 +8,8 @@ import (
 func main() {
 	fmt.Println(fourSum([]int{}, 0))                      //[]
 	fmt.Println(fourSum([]int{1, 2}, 3))                  //[]
-	fmt.Println(fourSum([]int{-1, 0, 1, 2, -1, -4}, 0))   //[[-1 0 1] [-1 -1 2]]
-	fmt.Println(fourSum([]int{0, 0, 0, 1, 1, -1, -2}, 1)) //[[0 0 0] [-1 0 1] [-2 1 1]]
+	fmt.Println(fourSum([]int{-1, 0, 1, 2, -1, -4}, 0))   //[[[-1 -1 0 2]]
+	fmt.Println(fourSum([]int{0, 0, 0, 1, 1, -1, -2}, 1)) //[[-1 0 1 1] [0 0 0 1]]
 }
 
 func fourSum(nums []int, target int) [][]int {
