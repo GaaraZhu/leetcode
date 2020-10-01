@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
-	fmt.Println(longestPalindrome("aac"))
-	fmt.Println(longestPalindrome("abc"))
-	fmt.Println(longestPalindrome("abcbdbcgg"))
-	fmt.Println(longestPalindrome("aacdefcaa"))
+	fmt.Println(longestPalindromeImproved("aac"))
+	fmt.Println(longestPalindromeImproved("abc"))
+	fmt.Println(longestPalindromeImproved("abcbdbcgg"))
+	fmt.Println(longestPalindromeImproved("aacdefcaa"))
 }
 
 func longestPalindrome(s string) string {
@@ -51,4 +52,37 @@ func longestPalindrome(s string) string {
 	}
 
 	return string(rsRunes)
+}
+
+func longestPalindromeImproved(s string) string {
+	length := len(s)
+	if length <= 1 {
+		return s
+	}
+
+	var tmpBytes []byte
+	for i := 0; i < length; i++ {
+		tmpBytes = append(tmpBytes, '#')
+		tmpBytes = append(tmpBytes, s[i])
+	}
+	tmpBytes = append(tmpBytes, '#')
+
+	// find the longgest common string
+	var resultS = ""
+	var currentS = ""
+	for i := 0; i < len(tmpBytes); i++ {
+		currentS = string(tmpBytes[i])
+		for j := 1; (i-j > 0) && (i+j < len(tmpBytes)); j++ {
+			if tmpBytes[i-j] != tmpBytes[i+j] {
+				break
+			}
+			currentS = string(tmpBytes[i-j]) + currentS + string(tmpBytes[i+j])
+		}
+		if len(currentS) > len(resultS) {
+			resultS = currentS
+		}
+		currentS = ""
+	}
+
+	return strings.Replace(resultS, '#')
 }

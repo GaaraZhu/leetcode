@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	s := "wordgoodgoodgoodbestword"
-	words := []string{"word", "good", "best", "word"}
+	fmt.Println("123"[0, 1])
+	s := "barfoofoobarthefoobarman"
+	words := []string{"bar", "foo", "the"}
 	fmt.Println(findSubstring(s, words))
 }
 
@@ -27,6 +28,10 @@ func findSubstring(s string, words []string) []int {
 		for _, c := range concatenation {
 			newConcatenations = append(newConcatenations, c+words[i])
 			newConcatenations = append(newConcatenations, words[i]+c)
+			// for j:=0;j<len(c);{
+			// 	c[0, j] + words[i] + c[j+1]
+			// 	j = j + len(words[i])
+			// }
 		}
 
 		concatenation = newConcatenations
@@ -34,6 +39,7 @@ func findSubstring(s string, words []string) []int {
 
 	var indexMap = make(map[int]bool)
 	for _, c := range concatenation {
+		fmt.Println(c)
 		if i := strings.Index(s, c); i != -1 {
 			indexMap[i] = true
 		}
