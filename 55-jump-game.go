@@ -23,11 +23,6 @@ func canJump(nums []int) bool {
 }
 
 func jump(nums []int, i int, memo map[int]bool) bool {
-	if i > len(nums)-1 {
-		memo[i] = false
-		return false
-	}
-
 	if v, ok := memo[i]; ok {
 		return v
 	}
@@ -37,7 +32,7 @@ func jump(nums []int, i int, memo map[int]bool) bool {
 		return true
 	}
 
-	for j := 1; j <= nums[i]; j++ {
+	for j := 1; j <= nums[i] && j <= len(nums)-1; j++ {
 		if jump(nums, i+j, memo) {
 			memo[i] = true
 			return true
