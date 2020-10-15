@@ -59,14 +59,14 @@ func uniquePaths(m int, n int) int {
 				counts = append(counts, 1)
 			}
 			continue
-		}
-
-		for j := 1; j <= n; j++ {
-			if j == 1 {
-				counts[0] = 1
-				continue
+		} else {
+			for j := 1; j <= n; j++ {
+				if j == 1 {
+					counts[0] = 1
+					continue
+				}
+				counts[j-1] = counts[j-1] + counts[j-2]
 			}
-			counts[j-1] = counts[j-1] + counts[j-2]
 		}
 	}
 
