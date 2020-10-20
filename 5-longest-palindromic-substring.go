@@ -6,10 +6,14 @@ import (
 )
 
 func main() {
-	fmt.Println(longestPalindromeImproved("aac"))
-	fmt.Println(longestPalindromeImproved("abc"))
-	fmt.Println(longestPalindromeImproved("abcbdbcgg"))
-	fmt.Println(longestPalindromeImproved("aacdefcaa"))
+	// fmt.Println(longestPalindrome("aac"))
+	// fmt.Println(longestPalindrome("abc"))
+	// fmt.Println(longestPalindrome("abcbdbcgg"))
+	// fmt.Println(longestPalindrome("aacdefcaa"))
+	fmt.Println(longestPalindrome("7aba"))
+	fmt.Println(longestPalindrome("abc"))
+	fmt.Println(longestPalindrome("abcbdbcgg"))
+	fmt.Println(longestPalindrome("aacdefcaa"))
 }
 
 func longestPalindrome(s string) string {
@@ -43,15 +47,45 @@ func longestPalindrome(s string) string {
 		currentS = ""
 	}
 
-	rRunes := []rune(resultS)
-	var rsRunes []rune
-	for i := 0; i < len(rRunes); i++ {
-		if rRunes[i] != '#' {
-			rsRunes = append(rsRunes, rRunes[i])
+	return strings.Replace(resultS, "#", "", -1)
+}
+
+// Time Limit Exceeded
+func longestPalindrome2(s string) string {
+	length := len(s)
+	if length <= 1 {
+		return s
+	}
+
+	runes1 := []rune(s)
+	var runes2 []rune
+	for i := 0; i < length; i++ {
+		runes2 = append(runes2, runes1[length-i-1])
+	}
+
+	var resultS = ""
+	var currentS = ""
+	for i := 0; i < length; i++ {
+		for j := 0; j < length; j++ {
+			if runes1[i] == runes2[j] {
+				currentS = string(runes1[i])
+				var endIndex int
+				for k := 1; (i+k < length) && (j+k < length); k++ {
+					if runes1[i+k] != runes2[j+k] {
+						break
+					}
+					endIndex = j + k
+					currentS += string(runes1[i+k])
+				}
+				if len(currentS) > len(resultS) && endIndex+i == length-1 {
+					resultS = currentS
+				}
+			}
+			currentS = ""
 		}
 	}
 
-	return string(rsRunes)
+	return resultS
 }
 
 func longestPalindromeImproved(s string) string {
